@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="./style.css">
+
+    <title>Gerar Orçamento</title>
+</head>
+<body>
+    <h1>Gerador de Orçamentos</h1>
+<form id="orcamento-form">
+    <h2>Dados do Cliente</h2>
+    <input name="nome" placeholder="Nome do Cliente" required>
+    <input name="email" placeholder="E-mail" required>
+    <input name="telefone" placeholder="Telefone">
+
+    <h2>Serviços</h2>
+    <div id="servicos-lista">
+        <!-- Inputs para serviços, pode adicionar dinâmica com JS -->
+    </div>
+    <button type="button" onclick="adicionarServico()">Adicionar Serviço</button>
+
+    <h2>Outras Informações</h2>
+    <input name="condicoes" placeholder="Condições">
+    <input name="validade" placeholder="Validade do Orçamento">
+    <textarea name="observacoes" placeholder="Observações"></textarea>
+
+    <h2>Logo da Empresa</h2>
+    <input type="file" name="logo">
+
+    <button type="submit">Gerar Orçamento em PDF</button>
+</form>
+</body>
+</html>
