@@ -152,10 +152,24 @@ input[type="file"] {
   h1 {
     font-size: 1.25rem;
   }
+
+  h2 {
+    font-size: 1.25rem;
+  }
+
+  button[type="button"],
+  button[type="submit"] {
+    font-size: 0.8rem;
+    padding: 8px 23px;
+  }
 }
 
 @media (max-width: 400px) {
   h1 {
+    font-size: 1.1rem;
+  }
+
+  h2 {
     font-size: 1.1rem;
   }
 }
