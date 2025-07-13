@@ -46,7 +46,7 @@ form#orcamento-form {
   height: 50px;
   width: 150px;
   object-fit: cover;
-  transform: translate(0,-17px);
+  transform: translate(0, -17px);
 }
 
 
@@ -104,6 +104,17 @@ button[type="submit"]:hover {
   background: #0077b6;
 }
 
+.add_servico_container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.total-container {
+  margin-top: 10px;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
 .remove-servico-btn {
   background-color: #c0392b !important;
   padding: 4px 8px !important;
@@ -117,6 +128,12 @@ button[type="submit"]:hover {
 /* Serviços Dinâmicos */
 #servicos-lista {
   margin-bottom: 8px;
+}
+
+#total-servicos-input {
+  width: 150px;
+  text-align: right;
+  margin-bottom: 0;
 }
 
 table {

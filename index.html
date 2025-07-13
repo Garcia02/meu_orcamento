@@ -27,22 +27,37 @@
             <input id="descricao-servico" placeholder="Descrição do Serviço" required>
             <input id="unidade-servico" placeholder="Unidade">
             <input id="valor-servico" type="number" step="0.01" placeholder="Valor (R\$)">
-            <button type="button" onclick="adicionarServico()">Adicionar Serviço</button>
+
+            <!-- Espaço para o total do serviço -->
+            <div class="add_servico_container">
+
+                <button type="button" onclick="adicionarServico()">Adicionar Serviço</button>
+
+                <div id="total-container">
+                    <!-- Campo para exibir o total e permitir entrada manual -->
+                    <label for="total-servicos-input">Total do Serviço: </label>
+                    <input id="total-servicos-input" type="text" value="R\$ 0,00" oninput="manualTotalInput()" />
+                </div>
+            </div>
+
         </div>
         <div id="servicos-lista">
-            <table id="tabela-servicos" style="display:none;">
-                <thead>
-                    <tr>
-                        <th>Descrição</th>
-                        <th>Unidade</th>
-                        <th>Valor (R\$)</th>
-                        <th>Ações</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- Serviços adicionados aparecerão aqui -->
-                </tbody>
-            </table>
+            <!-- Tabela dos serviços -->
+            <div id="servicos-lista">
+                <table id="tabela-servicos" style="display:none;">
+                    <thead>
+                        <tr>
+                            <th>Descrição</th>
+                            <th>Unidade</th>
+                            <th>Valor (R\$)</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Serviços adicionados aparecerão aqui -->
+                    </tbody>
+                </table>
+            </div>
         </div>
 
         <h2>Outras Informações</h2>
