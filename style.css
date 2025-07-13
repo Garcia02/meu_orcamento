@@ -43,10 +43,10 @@ form#orcamento-form {
 }
 
 .cabecalho img {
-  height: 60px;
+  height: 50px;
   width: 150px;
   object-fit: cover;
-  transform: translate(0,-20px);
+  transform: translate(0,-17px);
 }
 
 
