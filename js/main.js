@@ -88,26 +88,19 @@ function manualTotalInput() {
     }
 }
 
-// Função para gerar PDF (estrutura básica)
+// Função para gerar PDF
 function gerarPDF() {
-    const dados = coletarDadosFormulario();
-
-    // Validação básica
-    if (!dados.cidade || !dados.unidade || !dados.local) {
-        alert("Preencha todos os campos obrigatórios!");
-        return;
-    }
-
-    if (dados.servicos.length === 0) {
-        alert("Adicione pelo menos um serviço!");
-        return;
-    }
-
-    console.log("Dados coletados para PDF:", dados);
-    alert("Funcionalidade de PDF será implementada aqui!");
-
-    // TODO: Implementar geração real do PDF
-    // Sugestão: usar jsPDF ou PDFKit
+    mostrarLoading(true);
+    
+    // Pequeno delay para mostrar loading
+    setTimeout(() => {
+        const sucesso = gerarPDFCompleto();
+        mostrarLoading(false);
+        
+        if (sucesso) {
+            alert('PDF gerado com sucesso!');
+        }
+    }, 100);
 }
 
 // Inicialização quando a página carrega
