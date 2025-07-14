@@ -1,3 +1,22 @@
+// Função unificada para formatação monetária
+function formatarMoeda(valor) {
+    const numero = typeof valor === 'string' 
+        ? parseFloat(valor.replace(/[R\$\s.]/g, '').replace(",", "."))
+        : valor;
+    
+    if (isNaN(numero)) return "R\$ 0,00";
+    
+    return numero.toLocaleString('pt-BR', {
+        style: 'currency',
+        currency: 'BRL'
+    });
+}
+
+// Função para extrair valor numérico de string monetária
+function extrairValorNumerico(valorMonetario) {
+    return parseFloat(valorMonetario.replace(/[R\$\s.]/g, '').replace(",", ".")) || 0;
+}
+
 // Atualiza o total automaticamente ao somar os valores da tabela
 function atualizarTotal() {
     const tabela = document.querySelector("#tabela-servicos tbody");
@@ -5,32 +24,31 @@ function atualizarTotal() {
 
     let total = 0;
 
-    // Itera por cada linha da tabela e soma os valores da coluna "Valor (R\$)"
     linhas.forEach((linha) => {
         const valorCelula = linha.querySelector("td:nth-child(3)");
         if (valorCelula) {
-            const valor = parseFloat(
-                valorCelula.textContent.replace("R\$", "").replace(",", ".").trim()
-            );
-            total += isNaN(valor) ? 0 : valor; // Ignora valores inválidos
+            total += extrairValorNumerico(valorCelula.textContent);
         }
     });
 
-    // Atualiza o campo de total (mantém formato de moeda)
+    // Atualiza o campo de total usando formatação unificada
     const totalInput = document.querySelector("#total-servicos-input");
-    totalInput.value = `R\$ ${total.toFixed(2).replace(".", ",")}`;
+    totalInput.value = formatarMoeda(total);
 }
 
-// Permite que o usuário atualize o total manualmente através do input
+// Permite que o usuário atualize o total manualmente
 function manualTotalInput() {
     const totalInput = document.querySelector("#total-servicos-input");
-    let total = totalInput.value.replace("R\$", "").replace(",", ".").trim();
+    const valorNumerico = extrairValorNumerico(totalInput.value);
 
-    // Valida se o valor manual é um número válido
-    if (isNaN(parseFloat(total))) {
-        totalInput.style.border = "1px solid red"; // Destaca erro no formato
+    if (isNaN(valorNumerico) && totalInput.value !== "") {
+        totalInput.style.border = "2px solid #e74c3c";
+        totalInput.title = "Formato inválido - Use apenas números";
+        return false;
     } else {
-        totalInput.style.border = ""; // Remove o destaque de erro
+        totalInput.style.border = "";
+        totalInput.title = "";
+        return true;
     }
 }
 
@@ -40,26 +58,28 @@ function adicionarServico() {
     const und = document.getElementById("unidade-servico").value.trim();
     const val = document.getElementById("valor-servico").value.trim();
 
-    // Só a descrição é obrigatória
     if (!desc) {
         alert("Preencha a descrição do serviço!");
+        document.getElementById("descricao-servico").focus();
+        return;
+    }
+
+    // Validação atualizada para formato monetário
+    if (val && isNaN(extrairValorNumerico(val))) {
+        alert("Valor inválido!");
+        document.getElementById("valor-servico").focus();
         return;
     }
 
     const tabela = document.getElementById("tabela-servicos");
-    tabela.style.display = ""; // Garante que a tabela esteja visível
+    tabela.style.display = "";
 
     const tbody = tabela.querySelector("tbody");
     const row = document.createElement("tr");
 
-    // Formatação do valor apenas se preenchido
-    let valorFormatado = "";
-    if (val !== "") {
-        const num = Number(val.replace(",", ".")); // Suporte a vírgula ou ponto
-        valorFormatado = isNaN(num) ? "" : `R\$ ${num.toFixed(2).replace(".", ",")}`;
-    }
+    // Formatação unificada do valor
+    const valorFormatado = val ? formatarMoeda(extrairValorNumerico(val)) : "";
 
-    // Cria a linha da tabela
     row.innerHTML = `
         <td>${desc}</td>
         <td>${und}</td>
@@ -67,7 +87,6 @@ function adicionarServico() {
         <td><button type="button" class="remove-servico-btn">Remover</button></td>
     `;
 
-    // Adiciona a linha
     tbody.appendChild(row);
 
     // Limpa os inputs
@@ -75,16 +94,110 @@ function adicionarServico() {
     document.getElementById("unidade-servico").value = "";
     document.getElementById("valor-servico").value = "";
 
-    // Função de remover linha
+    // Event listener para remover
     row.querySelector(".remove-servico-btn").addEventListener("click", function () {
         row.remove();
-        // Esconde a tabela se vazio
         if (tbody.rows.length === 0) {
             tabela.style.display = "none";
         }
-
-        atualizarTotal(); // Recalcula o total após remoção
+        atualizarTotal();
     });
 
-    atualizarTotal(); // Recalcula o total após adição
+    atualizarTotal();
+}
+
+// Função para coletar dados do formulário
+function coletarDadosFormulario() {
+    const dados = {
+        cidade: document.querySelector('input[name="cidade"]').value,
+        unidade: document.querySelector('input[name="unidade"]').value,
+        local: document.querySelector('input[name="local"]').value,
+        validade: document.querySelector('input[name="validade"]').value,
+        observacoes: document.querySelector('textarea[name="observacoes"]').value,
+        servicos: [],
+        total: document.querySelector("#total-servicos-input").value
+    };
+
+    // Coletar serviços da tabela
+    const linhas = document.querySelectorAll("#tabela-servicos tbody tr");
+    linhas.forEach(linha => {
+        const colunas = linha.querySelectorAll("td");
+        if (colunas.length >= 3) {
+            dados.servicos.push({
+                descricao: colunas[0].textContent,
+                unidade: colunas[1].textContent,
+                valor: colunas[2].textContent
+            });
+        }
+    });
+
+    return dados;
+}
+
+// Função para gerar PDF (estrutura básica)
+function gerarPDF() {
+    const dados = coletarDadosFormulario();
+    
+    // Validação básica
+    if (!dados.cidade || !dados.unidade || !dados.local) {
+        alert("Preencha todos os campos obrigatórios!");
+        return;
+    }
+    
+    if (dados.servicos.length === 0) {
+        alert("Adicione pelo menos um serviço!");
+        return;
+    }
+    
+    console.log("Dados coletados para PDF:", dados);
+    alert("Funcionalidade de PDF será implementada aqui!");
+    
+    // TODO: Implementar geração real do PDF
+    // Sugestão: usar jsPDF ou PDFKit
+}
+
+// Inicialização quando a página carrega
+document.addEventListener('DOMContentLoaded', function() {
+    // Máscara monetária para campo de valor individual
+    const campoValor = document.getElementById('valor-servico');
+    aplicarMascaraMonetaria(campoValor);
+    
+    // ✅ NOVA: Máscara monetária para campo de total
+    const campoTotal = document.getElementById('total-servicos-input');
+    aplicarMascaraMonetaria(campoTotal);
+    
+    // Listener do formulário
+    document.getElementById('orcamento-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        gerarPDF();
+    });
+});
+
+// Função unificada para aplicar máscara monetária
+function aplicarMascaraMonetaria(elemento) {
+    elemento.addEventListener('input', function(e) {
+        let valor = e.target.value.replace(/\D/g, '');
+        
+        if (valor.length > 0) {
+            valor = (parseInt(valor) / 100).toLocaleString('pt-BR', {
+                style: 'currency',
+                currency: 'BRL'
+            });
+        }
+        
+        e.target.value = valor;
+        
+        // Remove borda de erro se existir
+        e.target.style.border = "";
+        e.target.title = "";
+    });
+    
+    // ✅ NOVO: Validação ao sair do campo
+    elemento.addEventListener('blur', function(e) {
+        const valor = extrairValorNumerico(e.target.value);
+        if (isNaN(valor) && e.target.value !== "") {
+            e.target.style.border = "2px solid #e74c3c";
+            e.target.title = "Valor inválido";
+        }
+    });
 }
