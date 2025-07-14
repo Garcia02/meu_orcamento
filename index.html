@@ -13,6 +13,7 @@
 
 <body>
     <h1>PROPOSTA COMERCIAL</h1>
+
     <form id="orcamento-form">
         <div class="cabecalho">
             <h2>Dados do Cliente</h2>
@@ -24,7 +25,7 @@
 
         <h2>Serviços</h2>
         <div id="inputs-servico">
-            <input id="descricao-servico" placeholder="Descrição do Serviço" required>
+            <input id="descricao-servico" placeholder="Descrição do Serviço">
             <input id="unidade-servico" placeholder="Unidade">
             <input id="valor-servico" placeholder="Valor (R$)">
 
@@ -48,7 +49,7 @@
                     <tr>
                         <th>Descrição</th>
                         <th>Unidade</th>
-                        <th>Valor (R\$)</th>
+                        <th>Valor (R$)</th>
                         <th>Ações</th>
                     </tr>
                 </thead>
@@ -65,7 +66,9 @@
         <button type="submit">Gerar Orçamento em PDF</button>
     </form>
 
-    <script src="script.js"></script>
+    <script src="./js/utils.js"></script>
+    <script src="./js/storage.js"></script>
+    <script src="./js/main.js"></script>
 </body>
 
 </html>
