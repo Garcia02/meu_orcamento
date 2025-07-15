@@ -276,7 +276,7 @@ function adicionarRodapePDF(doc) {
     function criarLinkClicavel(texto, url, yPos) {
         // ✅ USAR A CONFIGURAÇÃO GLOBAL DE OFFSET
         const posicaoX = pageWidth - PDF_CONFIG.margins.right - PDF_CONFIG.rodape.offsetContatos;
-        
+
         // Texto em azul
         doc.setTextColor(0, 102, 204);
         doc.setFont(undefined, 'normal');
@@ -329,8 +329,7 @@ function adicionarRodapePDF(doc) {
     doc.text(`Proposta gerada em ${dataGeracao} às ${horaGeracao}`, pageWidth / 2, rodapeY + 22, { align: 'center' });
 }
 
-
-// Adicionar tabela de serviços
+// Função para adicionar tabela de serviços com quebras automáticas e bordas corrigidas
 function adicionarServicosPDF(doc, dados, yPos) {
     // Título da seção
     doc.setFontSize(PDF_CONFIG.fonts.subtitle);
@@ -346,66 +345,92 @@ function adicionarServicosPDF(doc, dados, yPos) {
         return yPos + 10;
     }
 
-    // Configurações da tabela
+    // Configurações
     const pageWidth = doc.internal.pageSize.getWidth();
     const tableWidth = pageWidth - (PDF_CONFIG.margins.left + PDF_CONFIG.margins.right);
     const colWidths = {
         descricao: tableWidth * 0.5,
         unidade: tableWidth * 0.2,
-        valor: tableWidth * 0.3
+        valor:   tableWidth * 0.3
     };
+    const lineHeight = 5; // Altura de linha base
+    const vSpacing = 2;   // Espaço vertical extra para respiro
 
     // Cabeçalho da tabela
     doc.setFillColor(240, 240, 240);
-    doc.rect(PDF_CONFIG.margins.left, yPos, tableWidth, 8, 'F');
+    doc.rect(PDF_CONFIG.margins.left, yPos, tableWidth, lineHeight + vSpacing, 'F');
 
     doc.setFontSize(PDF_CONFIG.fonts.normal);
     doc.setTextColor(PDF_CONFIG.colors.text);
     doc.setFont(undefined, 'bold');
 
     let xPos = PDF_CONFIG.margins.left + 2;
-    doc.text('Descrição', xPos, yPos + 5);
+    doc.text('Descrição', xPos, yPos + lineHeight);
     xPos += colWidths.descricao;
-    doc.text('Unidade', xPos, yPos + 5);
+    doc.text('Unidade', xPos, yPos + lineHeight);
     xPos += colWidths.unidade;
-    doc.text('Valor', xPos, yPos + 5);
+    doc.text('Valor', xPos, yPos + lineHeight);
 
-    yPos += 8;
+    yPos += lineHeight + vSpacing;
+
+    // Parte que muda: cálculo do topo original para desenhar borda depois de todas as linhas
+    const yTabelaTopo = yPos - (lineHeight + vSpacing);
 
     // Linhas da tabela
     doc.setFont(undefined, 'normal');
+    let totalHeight = 0;
+
     dados.servicos.forEach((servico, index) => {
-        // Verificar se precisa de nova página
-        if (yPos > 250) {
+        // Quebra de página
+        if (yPos > doc.internal.pageSize.getHeight() - 30) {
             doc.addPage();
             yPos = 30;
         }
 
+        // Split na descrição para quebra automática
+        const descricaoLines = doc.splitTextToSize(servico.descricao || '', colWidths.descricao - 4);
+        const thisRowLines = Math.max(descricaoLines.length, 1);
+        const rowHeight = thisRowLines * lineHeight + vSpacing;
+
         // Fundo alternado
         if (index % 2 === 0) {
             doc.setFillColor(250, 250, 250);
-            doc.rect(PDF_CONFIG.margins.left, yPos, tableWidth, 6, 'F');
+            doc.rect(PDF_CONFIG.margins.left, yPos, tableWidth, rowHeight, 'F');
         }
 
-        // Conteúdo da linha
-        xPos = PDF_CONFIG.margins.left + 2;
-        doc.text(servico.descricao || '', xPos, yPos + 4);
-        xPos += colWidths.descricao;
-        doc.text(servico.unidade || '', xPos, yPos + 4);
-        xPos += colWidths.unidade;
-        doc.text(servico.valor || '', xPos, yPos + 4);
+        // Conteúdo
+        let x = PDF_CONFIG.margins.left + 2;
+        let yText = yPos + lineHeight; // Um pouco abaixo do topo
+        doc.text(descricaoLines, x, yText-4, {baseline: "top"}); // baseline garante início correto do texto
+        x += colWidths.descricao;
+        doc.text(servico.unidade || '', x, yText);
+        x += colWidths.unidade;
+        doc.text(servico.valor || '', x, yText);
 
-        yPos += 6;
+        yPos += rowHeight;
+        totalHeight += rowHeight;
     });
 
-    // Bordas da tabela
+    // Bordas externas da tabela
     doc.setDrawColor(PDF_CONFIG.colors.border);
-    doc.setLineWidth(0.1);
-    doc.rect(PDF_CONFIG.margins.left, yPos - (dados.servicos.length * 6) - 8, tableWidth, (dados.servicos.length * 6) + 8);
+    doc.setLineWidth(0.2);
+    // Altura total = head + todas as linhas
+    doc.rect(
+        PDF_CONFIG.margins.left,
+        yTabelaTopo,
+        tableWidth,
+        totalHeight + lineHeight + vSpacing // + head
+    );
+
+    // Bordas internas coluna
+    let x = PDF_CONFIG.margins.left;
+    x += colWidths.descricao;
+    doc.line(x, yTabelaTopo, x, yTabelaTopo + totalHeight + lineHeight + vSpacing);
+    x += colWidths.unidade;
+    doc.line(x, yTabelaTopo, x, yTabelaTopo + totalHeight + lineHeight + vSpacing);
 
     return yPos + 5;
 }
-
 
 // Adicionar observações
 function adicionarObservacoesPDF(doc, dados, yPos) {
