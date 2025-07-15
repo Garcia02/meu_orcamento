@@ -43,14 +43,6 @@ function limparRascunho() {
     localStorage.removeItem(STORAGE_KEY);
 }
 
-// Confirmar limpeza de rascunho
-function confirmarLimpezaRascunho() {
-    if (confirm('Tem certeza que deseja limpar o rascunho salvo?')) {
-        limparRascunho();
-        location.reload();
-    }
-}
-
 // Coletar dados do formulário
 function coletarDadosFormulario() {
     const dados = {
@@ -60,7 +52,8 @@ function coletarDadosFormulario() {
         validade: document.querySelector('input[name="validade"]').value,
         observacoes: document.querySelector('textarea[name="observacoes"]').value,
         servicos: [],
-        total: document.querySelector("#total-servicos-input").value
+        total: document.querySelector("#total-servicos-input").value,
+        responsavel: document.querySelector('input[name="responsavel"]').value
     };
 
     const linhas = document.querySelectorAll("#tabela-servicos tbody tr");
@@ -86,6 +79,7 @@ function restaurarDadosFormulario(dados) {
     document.querySelector('input[name="local"]').value = dados.local || '';
     document.querySelector('input[name="validade"]').value = dados.validade || '';
     document.querySelector('textarea[name="observacoes"]').value = dados.observacoes || '';
+    document.querySelector('input[name="responsavel"]').value = dados.responsavel || '';
     document.querySelector("#total-servicos-input").value = dados.total || 'R\$ 0,00';
 
     // Restaurar serviços

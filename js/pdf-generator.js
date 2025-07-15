@@ -125,7 +125,7 @@ function gerarPDFCompleto() {
         yPos = adicionarServicosPDF(doc, dados, yPos);
         yPos = adicionarTotalPDF(doc, dados, yPos);
         yPos = adicionarObservacoesPDF(doc, dados, yPos);
-        adicionarRodapePDF(doc);
+        adicionarRodapePDF(doc,dados);
 
         const nomeArquivo = gerarNomeArquivo(dados);
         doc.save(nomeArquivo);
@@ -169,7 +169,7 @@ function adicionarCabecalhoPDF(doc, dados) {
     // Título principal
     doc.setFontSize(PDF_CONFIG.fonts.title);
     doc.setTextColor(PDF_CONFIG.colors.primary);
-    doc.text('PROPOSTA COMERCIAL', pageWidth / 2, 35, { align: 'center' });
+    doc.text('PROPOSTA COMERCIAL', PDF_CONFIG.margins.left, 35);
 
     // Linha decorativa
     doc.setDrawColor(PDF_CONFIG.colors.primary);
@@ -237,7 +237,7 @@ function adicionarTotalPDF(doc, dados, yPos) {
 }
 
 // ✅ RODAPÉ CORRIGIDO - Com links clicáveis e posicionamento correto
-function adicionarRodapePDF(doc) {
+function adicionarRodapePDF(doc,dados) {
     const pageHeight = doc.internal.pageSize.getHeight();
     const pageWidth = doc.internal.pageSize.getWidth();
 
@@ -327,9 +327,11 @@ function adicionarRodapePDF(doc) {
     doc.setFontSize(PDF_CONFIG.fonts.small - 1);
     doc.setTextColor(PDF_CONFIG.colors.secondary);
     doc.text(`Proposta gerada em ${dataGeracao} às ${horaGeracao}`, pageWidth / 2, rodapeY + 22, { align: 'center' });
+    doc.text(`${dados.responsavel}`, pageWidth / 2, rodapeY + 26, { align: 'center' });
+    
 }
 
-// Função para adicionar tabela de serviços com quebras automáticas e bordas corrigidas
+// Função para adicionar tabela de serviços
 function adicionarServicosPDF(doc, dados, yPos) {
     // Título da seção
     doc.setFontSize(PDF_CONFIG.fonts.subtitle);
@@ -466,6 +468,7 @@ function adicionarObservacoesPDF(doc, dados, yPos) {
 
     return yPos;
 }
+
 function gerarNomeArquivo(dados) {
     const data = new Date().toISOString().slice(0, 10);
     const cliente = dados.cidade ? dados.cidade.replace(/\s+/g, '_') : 'Cliente';
