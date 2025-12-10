@@ -1,19 +1,21 @@
 // Função para adicionar um novo serviço
 function adicionarServico() {
-    const desc = document.getElementById("descricao-servico").value.trim();
-    const und = document.getElementById("unidade-servico").value.trim();
-    const val = document.getElementById("valor-servico").value.trim();
+    const desc = document.getElementById("servico-produto").value.trim();
+    const qtd = document.getElementById("quantidade").value.trim();
+    const med = document.getElementById("medida").value.trim();
+    const val = document.getElementById("valor-unitario").value.trim();
+    const sum = 0
 
     if (!desc) {
         alert("Preencha a descrição do serviço!");
-        document.getElementById("descricao-servico").focus();
+        document.getElementById("servico-produto").focus();
         return;
     }
 
     // Validação atualizada para formato monetário
     if (val && isNaN(extrairValorNumerico(val))) {
         alert("Valor inválido!");
-        document.getElementById("valor-servico").focus();
+        document.getElementById("valor-unitario").focus();
         return;
     }
 
@@ -28,17 +30,20 @@ function adicionarServico() {
 
     row.innerHTML = `
         <td>${desc}</td>
-        <td>${und}</td>
+        <td>${qtd}</td>
+        <td>${med}</td>
         <td>${valorFormatado}</td>
+        <td>${sum}</td>
         <td><button type="button" class="remove-servico-btn">Remover</button></td>
     `;
 
     tbody.appendChild(row);
 
     // Limpa os inputs
-    document.getElementById("descricao-servico").value = "";
-    document.getElementById("unidade-servico").value = "";
-    document.getElementById("valor-servico").value = "";
+    document.getElementById("servico-produto").value = "";
+    document.getElementById("quantidade").value = "";
+    document.getElementById("medida").value = "";
+    document.getElementById("valor-unitario").value = "";
 
     // Event listener para remover
     row.querySelector(".remove-servico-btn").addEventListener("click", function () {
@@ -61,7 +66,7 @@ function atualizarTotal() {
     let total = 0;
 
     linhas.forEach((linha) => {
-        const valorCelula = linha.querySelector("td:nth-child(3)");
+        const valorCelula = linha.querySelector("td:nth-child(4)");
         if (valorCelula) {
             total += extrairValorNumerico(valorCelula.textContent);
         }
@@ -106,7 +111,7 @@ function gerarPDF() {
 // Inicialização quando a página carrega
 document.addEventListener('DOMContentLoaded', function () {
     // Máscara monetária para campo de valor individual
-    const campoValor = document.getElementById('valor-servico');
+    const campoValor = document.getElementById('valor-unitario');
     aplicarMascaraMonetaria(campoValor);
 
     // Máscara monetária para campo de total

@@ -369,7 +369,7 @@ function adicionarServicosPDF(doc, dados, yPos) {
     let xPos = PDF_CONFIG.margins.left + 2;
     doc.text('Descrição', xPos, yPos + lineHeight);
     xPos += colWidths.descricao;
-    doc.text('Unidade', xPos, yPos + lineHeight);
+    doc.text('quantidade', xPos, yPos + lineHeight);
     xPos += colWidths.unidade;
     doc.text('Valor', xPos, yPos + lineHeight);
 
