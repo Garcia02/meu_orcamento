@@ -4,7 +4,11 @@ function adicionarServico() {
     const qtd = document.getElementById("quantidade").value.trim();
     const med = document.getElementById("medida").value.trim();
     const val = document.getElementById("valor-unitario").value.trim();
-    const sum = 0
+
+    // CORRIGIDO: Extrai valor numérico, converte quantidade e multiplica
+    const valorNumerico = extrairValorNumerico(val);
+    const quantidadeNumerica = parseFloat(qtd);
+    const sum = valorNumerico * quantidadeNumerica;
 
     if (!desc) {
         alert("Preencha a descrição do serviço!");
@@ -12,8 +16,14 @@ function adicionarServico() {
         return;
     }
 
+    if (!qtd || isNaN(quantidadeNumerica)) {
+        alert("Quantidade inválida!");
+        document.getElementById("quantidade").focus();
+        return;
+    }
+
     // Validação atualizada para formato monetário
-    if (val && isNaN(extrairValorNumerico(val))) {
+    if (val && isNaN(valorNumerico)) {
         alert("Valor inválido!");
         document.getElementById("valor-unitario").focus();
         return;
@@ -26,14 +36,15 @@ function adicionarServico() {
     const row = document.createElement("tr");
 
     // Formatação unificada do valor
-    const valorFormatado = val ? formatarMoeda(extrairValorNumerico(val)) : "";
+    const valorFormatado = val ? formatarMoeda(valorNumerico) : "";
+    const somaFormatada = formatarMoeda(sum);
 
     row.innerHTML = `
         <td>${desc}</td>
-        <td>${qtd}</td>
+        <td>${quantidadeNumerica}</td>
         <td>${med}</td>
         <td>${valorFormatado}</td>
-        <td>${sum}</td>
+        <td>${somaFormatada}</td>
         <td><button type="button" class="remove-servico-btn">Remover</button></td>
     `;
 
@@ -52,6 +63,7 @@ function adicionarServico() {
             tabela.style.display = "none";
         }
         atualizarTotal();
+        salvarRascunho();
     });
 
     atualizarTotal();
@@ -66,7 +78,7 @@ function atualizarTotal() {
     let total = 0;
 
     linhas.forEach((linha) => {
-        const valorCelula = linha.querySelector("td:nth-child(4)");
+        const valorCelula = linha.querySelector("td:nth-child(5)");
         if (valorCelula) {
             total += extrairValorNumerico(valorCelula.textContent);
         }

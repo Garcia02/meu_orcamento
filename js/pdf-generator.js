@@ -1,7 +1,7 @@
 // ===== GERAÇÃO DE PDF MELHORADA =====
 
-// Logo da empresa em Base64 (mesma que você forneceu)
-const LOGO_BASE64 = 'data:image/jpeg;base64,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';
+// Logo da empresa em Base64
+const LOGO_BASE64 = 'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/7QCEUGhvdG9zaG9wIDMuMAA4QklNBAQAAAAAAGgcAigAYkZCTUQwYTAwMGFhYjAxMDAwMDc5MDIwMDAwMjIwMzAwMDAyZTAzMDAwMDNhMDMwMDAwZGQwNDAwMDA0MTA2MDAwMDlhMDYwMDAwYTYwNjAwMDBiMjA2MDAwMGY4MDcwMDAwAP/bAIQABQYGCwgLCwsLCw0LCwsNDg4NDQ4ODw0ODg4NDxAQEBEREBAQEA8TEhMPEBETFBQTERMWFhYTFhUVFhkWGRYWEgEFBQUKBwoICQkICwgKCAsKCgkJCgoMCQoJCgkMDQsKCwsKCw0MCwsICwsMDAwNDQwMDQoLCg0MDQ0MExQTExOc/8IAEQgAlgCWAwEiAAIRAQMRAf/EAHYAAQEBAQEBAQAAAAAAAAAAAAAHBQYEAwIQAAIBAgMDCAcJAQAAAAAAAAECAwARBBIhEzFRBSIjMEFgYYEUMjNCcXKRFSA0QFJicKGxwREBAAICAQQBAgYDAAAAAAAAAREhADFBUWFxgTCR8BBAYHChwbHR4f/aAAwDAQACAAMAAAABsoAAAAAAAAEassaLKAAAAAAAABGrLGiygAAAAAAAARqyxosoB4zN3JN7imud1T2uBxiruI6A1wAAI1ZY0WUDn+g5olfs7nUPF8fLtGF69T1GBp6P4NVz/wBDcZWqAI1ZY0WUDhu5Eo+FeEf+NmEpyLaJVj20Szw2ERKx+oAI1ZY0WUAAAAAAAACNWWNFlAAAAAAAAAjVljRZQAAAAAAAAI1ZY0WVGhZUaFlRoWVGhZUaFlRoWVGhZUaFlRoWWNB//9oACAEBAAEFAu+2Mxq4agb/AJGeURJjn9KjnxDxGbEkQQNmTC8oPJNJyhIGxGMl2WDxG3i6rlL8PtkEGLxEbMse3gXD4kJ9jKqnkwMDycZmwWD9G6vGbFBHiMLbaQGpJsJE0mPiir7RitJi40LYlBTYuNZJuUIoWXHRMGxcayff5a9nJMrwLC0E6T+jxSOQ86riV6SjA6GRZpqO0nnitlkWaWoZBIv8N//aAAgBAwABPwHvJ//aAAgBAgABPwHvJ//aAAgBAQAGPwLvst9S5so/JM53KL/SsPLoLOCV+YgVEFNs81m+AqSRdCqnx3UjHeVB+oqzW2UmbZHjs9/1qfp402bsFQrctbzqLItp5rWXhpdqR+I1+Pb/AH1c3yNUQzLfo9L8GqCzqbTXOvZpToCOfcX37xWTaR2yZRZTfdbjSbNiJIyCCSSNN+njUwY6ySF1Yb0PZStO2bImUZbrr2t51IAbxlrqO0cerzTXKk2tqRf5RTEJlCC56Ir/AMqPRSJfU5u/S9H3SvrGNWFviV0pQWJzLmFgWuOOgpSSQHbKLqRr504J9muZtOyo9fa+r/tLEW57C4FZGJzWvorHTyFIQ1xI2VdDv4eFLEW57C4HUR6kWmTUa2361iAJ3mOTcy2tr8orDx26LNnQ/puvOX6608JOzlDtvjL7QHh2a1A0jNAdhqVT9261jWHXO0qmVgWIyn1fgKxSyDnJAEv+qx0PmKwZMjOMw0IHN5vhUmIWP3w6NfULF+3xovC+zJw6kaXvruN6w1gwYYjpc2/PbWpMSsfv50a+oWLS2XxpWG5hf+HP/9oACAEBAQE/If1sdGik5ZJl4CcDRn8iKyrYbQcZG6s0qwZD2i8jLD6igxPEzeGJLSaSJxd4d5BcQgHMVpRbslM4wEutYSV61vARlgHcoeA66nA5mp0ND0H4/sXTJGIKYJAFqZozhbEFcj2zW2HoIOmLHfMMaGejxilZEte5gOzBMRGQiKO6TjeabJG97ERkVGI7UtLKUV3YR8cXCkq8mDQ65HBHpToExyZ9Yh4loT0Krrg2E6BB9qeQz3x95kfeqM29T+7wIL21iohG4w6HV+DLVsCrakPFdciaVk2Xzo05qIkbVzZmmeF7IifbIClYNl864fgo1kJSJoIdb1lyZZMQNbZnAklO42z0UecSd0sTNjqWCV4yXyBol4ZFdskzQzYuOCSGMiLDuGrfVDGLyuT0BrV5C82KMyAQlhM3eT8JZIlwlX0szchUaJJsAR07d5wUNqiMwBCUEzd5paA6kmvX7Of/2gAMAwEAAgADAQAAEPPPPPPPPPKPPPPPPPPPKPPPPPPPPPKPPPPPPPPPKPOFNMPPPPKPLDFNBMPPKPPLHPHDDPKPPPPPPPPPKPPPPPPPPPKPPPPPPPPPKPPPPPPPPPKMMMMMMMMMIP/aAAgBAwABPxDvJ//aAAgBAgABPxDvJ//aAAgBAQEBPxD9baGdrkBaQFdroOgkgJiRHXj8jCyVW4RJCXu50lFQLoTg1uOHptPMwqnTGK8l5H7K4Qao4twQhOoXuMNbDwqFDnTO3X3gDbhBo/0rtn0D4/t3XjsFJHG+QZZ939Sl3Z4miKM58xQCf/e2G8N269/dTJXtciJeVckQnKLuUx9UwQrIg5TVxs2CjlubfkhYu0cXh7zETlOMT4p+ypOjpv8AD6sxzABQykMalEZDZWQoDsv9iYa8itdoch1Ms2bX7sr+FgyltEOcJmoW4ys7ZGVQkXZl7AixzVIO0wsimuHbitQssfAqM2ZptwdVs4u9SwnpB1z/AABfkAfwSsxS/Cg/4q1IxCzuo6sXjhdThzAJOob5ZcQnfRePz6Fgf7PuZ4jcA+uZwog4HowL/wDTDYSHg80BMjro9z9nP//Z';
 
 // ✅ CONFIGURAÇÕES SEPARADAS PARA CABEÇALHO E RODAPÉ
 const LOGO_CONFIG = {
@@ -9,19 +9,17 @@ const LOGO_CONFIG = {
     height: 50,
     position: 'top-right',
     quality: 0.8,
-    // Crop para cabeçalho
     crop: {
         enabled: true,
         offsetX: -8,
         offsetY: -15,
         scale: 1.2
     },
-    // ✅ NOVO: Crop específico para rodapé
     cropRodape: {
         enabled: true,
-        offsetX: -4,     // ← Mais offset para centralizar
-        offsetY: -4,     // ← Mais offset para centralizar  
-        scale: 1.5       // ← ZOOM MAIOR (era 1.2, agora 1.8)
+        offsetX: -4,
+        offsetY: -4,
+        scale: 1.5
     }
 };
 
@@ -36,9 +34,8 @@ const PDF_CONFIG = {
         right: 20,
         bottom: 20
     },
-    // ✅ NOVA CONFIGURAÇÃO
     rodape: {
-        offsetContatos: 10  // ← Afastamento dos contatos da borda direita
+        offsetContatos: 10
     },
     colors: {
         primary: '#30475e',
@@ -59,24 +56,19 @@ function adicionarLogoComCrop(doc, x, y, width, height, usarCropRodape = false) 
     try {
         if (!LOGO_BASE64 || LOGO_BASE64.length < 100) return;
 
-        // ✅ ESCOLHER CONFIGURAÇÃO DE CROP
         const cropConfig = usarCropRodape ? LOGO_CONFIG.cropRodape : LOGO_CONFIG.crop;
 
         if (cropConfig.enabled) {
-            // EXPLICAÇÃO: Aplicar zoom e reposicionamento
             const novaLargura = width * cropConfig.scale;
             const novaAltura = height * cropConfig.scale;
             const novoX = x + cropConfig.offsetX;
             const novoY = y + cropConfig.offsetY;
 
-            // Adicionar imagem com zoom
             doc.addImage(LOGO_BASE64, 'JPEG', novoX, novoY, novaLargura, novaAltura);
 
-            // ✅ MÁSCARA PARA ESCONDER BORDAS (crop simulado)
-            const corFundo = usarCropRodape ? [248, 248, 248] : [255, 255, 255]; // Cor do fundo
+            const corFundo = usarCropRodape ? [248, 248, 248] : [255, 255, 255];
             doc.setFillColor(...corFundo);
 
-            // Mascarar bordas que saem da área desejada
             if (novoX < x) {
                 doc.rect(novoX, novoY, x - novoX, novaAltura, 'F');
             }
@@ -90,7 +82,6 @@ function adicionarLogoComCrop(doc, x, y, width, height, usarCropRodape = false) 
                 doc.rect(x, y + height, width, (novoY + novaAltura) - (y + height), 'F');
             }
         } else {
-            // Sem crop, imagem normal
             doc.addImage(LOGO_BASE64, 'JPEG', x, y, width, height);
         }
     } catch (error) {
@@ -98,7 +89,31 @@ function adicionarLogoComCrop(doc, x, y, width, height, usarCropRodape = false) 
     }
 }
 
-// Função principal (sem mudanças significativas)
+// ✅ FUNÇÃO AUXILIAR - Criar link clicável (MOVIDA PARA FORA)
+function criarLinkClicavel(doc, texto, url, posicaoX, posicaoY, pageWidth) {
+    try {
+        if (!doc || !texto || !url) return false;
+
+        doc.setTextColor(0, 102, 204);
+        doc.setFont(undefined, 'normal');
+        doc.text(texto, posicaoX, posicaoY, { align: 'right' });
+
+        const textWidth = doc.getTextWidth(texto);
+        const textX = posicaoX - textWidth;
+
+        doc.setDrawColor(0, 102, 204);
+        doc.setLineWidth(0.1);
+        doc.line(textX, posicaoY + 0.5, textX + textWidth, posicaoY + 0.5);
+
+        doc.link(textX, posicaoY - 3, textWidth, 4, { url: url });
+        return true;
+    } catch (error) {
+        console.warn('Erro ao criar link:', error);
+        return false;
+    }
+}
+
+// Função principal
 function gerarPDFCompleto() {
     try {
         if (typeof window.jspdf === 'undefined') {
@@ -119,20 +134,18 @@ function gerarPDFCompleto() {
             format: PDF_CONFIG.format
         });
 
-        // Construir o PDF
         let yPos = adicionarCabecalhoPDF(doc, dados);
         yPos = adicionarDadosClientePDF(doc, dados, yPos);
         yPos = adicionarServicosPDF(doc, dados, yPos);
         yPos = adicionarTotalPDF(doc, dados, yPos);
         yPos = adicionarObservacoesPDF(doc, dados, yPos);
-        adicionarRodapePDF(doc,dados);
+        adicionarRodapePDF(doc, dados);
 
         const nomeArquivo = gerarNomeArquivo(dados);
         doc.save(nomeArquivo);
         limparRascunho();
 
         return true;
-
     } catch (error) {
         console.error('Erro ao gerar PDF:', error);
         alert('Erro ao gerar PDF. Verifique se todos os arquivos estão carregados corretamente.');
@@ -140,11 +153,10 @@ function gerarPDFCompleto() {
     }
 }
 
-// ✅ FUNÇÃO MELHORADA - Cabeçalho com logo 50x50
+// ✅ CABEÇALHO COM LOGO 50x50
 function adicionarCabecalhoPDF(doc, dados) {
     const pageWidth = doc.internal.pageSize.getWidth();
 
-    // Logo 50x50 no topo
     let logoX, logoY;
 
     switch (LOGO_CONFIG.position) {
@@ -163,15 +175,12 @@ function adicionarCabecalhoPDF(doc, dados) {
             break;
     }
 
-    // ✅ USAR CROP PADRÃO (false = não usar crop de rodapé)
     adicionarLogoComCrop(doc, logoX, logoY, LOGO_CONFIG.width, LOGO_CONFIG.height, false);
 
-    // Título principal
     doc.setFontSize(PDF_CONFIG.fonts.title);
     doc.setTextColor(PDF_CONFIG.colors.primary);
     doc.text('PROPOSTA COMERCIAL', PDF_CONFIG.margins.left, 35);
 
-    // Linha decorativa
     doc.setDrawColor(PDF_CONFIG.colors.primary);
     doc.setLineWidth(0.5);
     doc.line(PDF_CONFIG.margins.left, 40, pageWidth - PDF_CONFIG.margins.right, 40);
@@ -179,16 +188,16 @@ function adicionarCabecalhoPDF(doc, dados) {
     return 50;
 }
 
-// ✅ FUNÇÃO CORRIGIDA - Dados do cliente com título
+// ✅ DADOS DO CLIENTE COM VALIDAÇÃO
 function adicionarDadosClientePDF(doc, dados, yPos) {
-    // ✅ TÍTULO DA SEÇÃO (estava faltando!)
+    if (!dados) return yPos;
+
     doc.setFontSize(PDF_CONFIG.fonts.subtitle);
     doc.setTextColor(PDF_CONFIG.colors.primary);
     doc.setFont(undefined, 'bold');
 
-    yPos += 4; // Espaço após o título
+    yPos += 4;
 
-    // Dados do cliente
     doc.setFontSize(PDF_CONFIG.fonts.normal);
     doc.setTextColor(PDF_CONFIG.colors.text);
 
@@ -211,33 +220,152 @@ function adicionarDadosClientePDF(doc, dados, yPos) {
     return yPos + 5;
 }
 
-// ✅ FUNÇÃO MELHORADA - Total com posicionamento correto
+// ✅ TABELA DE SERVIÇOS CORRIGIDA COM LOOP PARA LINHAS
+function adicionarServicosPDF(doc, dados, yPos) {
+    if (!dados || !Array.isArray(dados.servicos)) {
+        console.warn('Dados de serviços inválidos');
+        return yPos;
+    }
+
+    doc.setFontSize(PDF_CONFIG.fonts.subtitle);
+    doc.setTextColor(PDF_CONFIG.colors.primary);
+    doc.text('SERVIÇOS', PDF_CONFIG.margins.left, yPos);
+
+    yPos += 10;
+
+    if (dados.servicos.length === 0) {
+        doc.setFontSize(PDF_CONFIG.fonts.normal);
+        doc.setTextColor(PDF_CONFIG.colors.text);
+        doc.text('Nenhum serviço adicionado', PDF_CONFIG.margins.left, yPos);
+        return yPos + 10;
+    }
+
+    const pageWidth = doc.internal.pageSize.getWidth();
+    const tableWidth = pageWidth - (PDF_CONFIG.margins.left + PDF_CONFIG.margins.right);
+    const colWidths = {
+        descricao: tableWidth * 0.4,
+        quantidade: tableWidth * 0.15,
+        medida: tableWidth * 0.15,
+        valor: tableWidth * 0.15,
+        somado: tableWidth * 0.15
+    };
+    const lineHeight = 5;
+    const vSpacing = 2;
+    const paddingInterno = 6; // Aumentado para 6mm para evitar vazamentos visuais
+
+    // Cabeçalho
+    doc.setFillColor(240, 240, 240);
+    doc.rect(PDF_CONFIG.margins.left, yPos, tableWidth, lineHeight + vSpacing, 'F');
+
+    doc.setFontSize(PDF_CONFIG.fonts.normal);
+    doc.setTextColor(PDF_CONFIG.colors.text);
+    doc.setFont(undefined, 'bold');
+
+    let xPos = PDF_CONFIG.margins.left + 2;
+    doc.text('Serviço/Produto', xPos, yPos + lineHeight);
+    xPos += colWidths.descricao;
+    doc.text('Qtd', xPos, yPos + lineHeight);
+    xPos += colWidths.quantidade;
+    doc.text('Medida', xPos, yPos + lineHeight);
+    xPos += colWidths.medida;
+    doc.text('Valor Unit.', xPos, yPos + lineHeight);
+    xPos += colWidths.valor;
+    doc.text('Total', xPos, yPos + lineHeight);
+
+    yPos += lineHeight + vSpacing;
+    const yTabelaTopo = yPos - (lineHeight + vSpacing);
+
+    doc.setFont(undefined, 'normal');
+    let totalHeight = 0;
+
+    dados.servicos.forEach((servico, index) => {
+        if (yPos > doc.internal.pageSize.getHeight() - 30) {
+            doc.addPage();
+            yPos = 30;
+        }
+
+        // Dividir texto em linhas com largura estrita (subtrair padding duplo)
+        const maxWidthTexto = colWidths.descricao - (2 * paddingInterno);
+        const descricaoLines = doc.splitTextToSize(servico.servico_produto || '', maxWidthTexto);
+        const thisRowLines = Math.max(descricaoLines.length, 1);
+        const rowHeight = thisRowLines * lineHeight + vSpacing;
+
+        if (index % 2 === 0) {
+            doc.setFillColor(250, 250, 250);
+            doc.rect(PDF_CONFIG.margins.left, yPos, tableWidth, rowHeight, 'F');
+        }
+
+        // Desenhar texto da primeira coluna linha por linha com padding e alinhamento top-left
+        const xDescricao = PDF_CONFIG.margins.left + paddingInterno;
+        let yAtual = yPos + paddingInterno;
+        descricaoLines.forEach(linha => {
+            doc.text(linha, xDescricao, yAtual);
+            yAtual += lineHeight;
+        });
+
+        // Demais colunas (alinhadas no meio da altura da linha)
+        const yMeioLinha = yPos + (rowHeight / 2);
+        let x = PDF_CONFIG.margins.left + colWidths.descricao + 2;
+        doc.text(servico.quantidade || '', x, yMeioLinha);
+        x += colWidths.quantidade;
+        doc.text(servico.medida || '', x, yMeioLinha);
+        x += colWidths.medida;
+        doc.text(servico.valor_unitario || '', x, yMeioLinha);
+        x += colWidths.valor;
+        doc.text(servico.valor_somado || '', x, yMeioLinha);
+
+        yPos += rowHeight;
+        totalHeight += rowHeight;
+    });
+
+    doc.setDrawColor(PDF_CONFIG.colors.border);
+    doc.setLineWidth(0.2);
+    doc.rect(
+        PDF_CONFIG.margins.left,
+        yTabelaTopo,
+        tableWidth,
+        totalHeight + lineHeight + vSpacing
+    );
+
+    let x = PDF_CONFIG.margins.left;
+    x += colWidths.descricao;
+    doc.line(x, yTabelaTopo, x, yTabelaTopo + totalHeight + lineHeight + vSpacing);
+    x += colWidths.quantidade;
+    doc.line(x, yTabelaTopo, x, yTabelaTopo + totalHeight + lineHeight + vSpacing);
+    x += colWidths.medida;
+    doc.line(x, yTabelaTopo, x, yTabelaTopo + totalHeight + lineHeight + vSpacing);
+    x += colWidths.valor;
+    doc.line(x, yTabelaTopo, x, yTabelaTopo + totalHeight + lineHeight + vSpacing);
+
+    return yPos + 5;
+}
+
+// ✅ TOTAL COM POSICIONAMENTO CORRETO
 function adicionarTotalPDF(doc, dados, yPos) {
     const pageWidth = doc.internal.pageSize.getWidth();
 
-    // EXPLICAÇÃO: Caixa dimensionada corretamente
-    const caixaLargura = 85; // Largura suficiente
+    const caixaLargura = 85;
     const caixaX = pageWidth - PDF_CONFIG.margins.right - caixaLargura;
 
     doc.setFillColor(PDF_CONFIG.colors.primary);
     doc.rect(caixaX, yPos, caixaLargura, 12, 'F');
 
-    // Configuração do texto
     doc.setFontSize(PDF_CONFIG.fonts.subtitle);
     doc.setTextColor(255, 255, 255);
     doc.setFont(undefined, 'bold');
 
-    // EXPLICAÇÃO: Posicionamento relativo à caixa
-    const textoX = caixaX + 5; // 5mm da borda esquerda da caixa
+    const textoX = caixaX + 5;
 
     doc.text('TOTAL:', textoX, yPos + 8);
-    doc.text(dados.total || 'R\$ 0,00', textoX + 25, yPos + 8); // 25mm de espaço
+    doc.text(dados.total || 'R$ 0,00', textoX + 25, yPos + 8);
 
     return yPos + 20;
 }
 
-// ✅ RODAPÉ CORRIGIDO - Com links clicáveis e posicionamento correto
-function adicionarRodapePDF(doc,dados) {
+// ✅ RODAPÉ CORRIGIDO COM VALIDAÇÕES
+function adicionarRodapePDF(doc, dados) {
+    if (!doc) return;
+
     const pageHeight = doc.internal.pageSize.getHeight();
     const pageWidth = doc.internal.pageSize.getWidth();
 
@@ -272,52 +400,38 @@ function adicionarRodapePDF(doc,dados) {
     doc.setFont(undefined, 'normal');
     doc.text('Especializada em drywall e serviços civis.', textoX, rodapeY + 13);
 
-    // ✅ FUNÇÃO AUXILIAR CORRIGIDA
-    function criarLinkClicavel(texto, url, yPos) {
-        // ✅ USAR A CONFIGURAÇÃO GLOBAL DE OFFSET
-        const posicaoX = pageWidth - PDF_CONFIG.margins.right - PDF_CONFIG.rodape.offsetContatos;
-
-        // Texto em azul
-        doc.setTextColor(0, 102, 204);
-        doc.setFont(undefined, 'normal');
-        doc.text(texto, posicaoX, yPos, { align: 'right' });
-
-        // Calcular área do link
-        const textWidth = doc.getTextWidth(texto);
-        const textX = posicaoX - textWidth;
-
-        // Linha sublinhada para indicar link
-        doc.setDrawColor(0, 102, 204);
-        doc.setLineWidth(0.1);
-        doc.line(textX, yPos + 0.5, textX + textWidth, yPos + 0.5);
-
-        // Adicionar link clicável
-        doc.link(textX, yPos - 3, textWidth, 4, { url: url });
-    }
-
-    // ✅ APLICAR LINKS
+    // ✅ APLICAR LINKS COM VALIDAÇÃO
     doc.setFontSize(PDF_CONFIG.fonts.small - 1);
 
     // E-mail
     criarLinkClicavel(
+        doc,
         'Email: contatolaraengenharia@gmail.com',
         'mailto:contatolaraengenharia@gmail.com?subject=Contato%20via%20Proposta%20Comercial',
-        rodapeY + 8
+        pageWidth - PDF_CONFIG.margins.right - PDF_CONFIG.rodape.offsetContatos,
+        rodapeY + 8,
+        pageWidth
     );
 
     // Instagram
     criarLinkClicavel(
+        doc,
         'Instagram: @laraengenharia_',
         'https://instagram.com/laraengenharia_',
-        rodapeY + 13.5
+        pageWidth - PDF_CONFIG.margins.right - PDF_CONFIG.rodape.offsetContatos,
+        rodapeY + 13.5,
+        pageWidth
     );
 
     // WhatsApp
     const mensagemWhats = encodeURIComponent('Olá! Vi sua proposta comercial e gostaria de mais informações.');
     criarLinkClicavel(
+        doc,
         'WhatsApp: (15) 99714-0338',
         `https://wa.me/5515997140338?text=${mensagemWhats}`,
-        rodapeY + 19
+        pageWidth - PDF_CONFIG.margins.right - PDF_CONFIG.rodape.offsetContatos,
+        rodapeY + 19,
+        pageWidth
     );
 
     // Data/hora (sem link)
@@ -327,117 +441,18 @@ function adicionarRodapePDF(doc,dados) {
     doc.setFontSize(PDF_CONFIG.fonts.small - 1);
     doc.setTextColor(PDF_CONFIG.colors.secondary);
     doc.text(`Proposta gerada em ${dataGeracao} às ${horaGeracao}`, pageWidth / 2, rodapeY + 22, { align: 'center' });
-    doc.text(`${dados.responsavel}`, pageWidth / 2, rodapeY + 26, { align: 'center' });
-    
-}
 
-// Função para adicionar tabela de serviços
-function adicionarServicosPDF(doc, dados, yPos) {
-    // Título da seção
-    doc.setFontSize(PDF_CONFIG.fonts.subtitle);
-    doc.setTextColor(PDF_CONFIG.colors.primary);
-    doc.text('SERVIÇOS', PDF_CONFIG.margins.left, yPos);
-
-    yPos += 10;
-
-    if (dados.servicos.length === 0) {
-        doc.setFontSize(PDF_CONFIG.fonts.normal);
-        doc.setTextColor(PDF_CONFIG.colors.text);
-        doc.text('Nenhum serviço adicionado', PDF_CONFIG.margins.left, yPos);
-        return yPos + 10;
+    // ✅ VALIDAÇÃO DE RESPONSÁVEL
+    if (dados && dados.responsavel) {
+        doc.text(`${dados.responsavel}`, pageWidth / 2, rodapeY + 26, { align: 'center' });
     }
-
-    // Configurações
-    const pageWidth = doc.internal.pageSize.getWidth();
-    const tableWidth = pageWidth - (PDF_CONFIG.margins.left + PDF_CONFIG.margins.right);
-    const colWidths = {
-        descricao: tableWidth * 0.5,
-        unidade: tableWidth * 0.2,
-        valor:   tableWidth * 0.3
-    };
-    const lineHeight = 5; // Altura de linha base
-    const vSpacing = 2;   // Espaço vertical extra para respiro
-
-    // Cabeçalho da tabela
-    doc.setFillColor(240, 240, 240);
-    doc.rect(PDF_CONFIG.margins.left, yPos, tableWidth, lineHeight + vSpacing, 'F');
-
-    doc.setFontSize(PDF_CONFIG.fonts.normal);
-    doc.setTextColor(PDF_CONFIG.colors.text);
-    doc.setFont(undefined, 'bold');
-
-    let xPos = PDF_CONFIG.margins.left + 2;
-    doc.text('Descrição', xPos, yPos + lineHeight);
-    xPos += colWidths.descricao;
-    doc.text('quantidade', xPos, yPos + lineHeight);
-    xPos += colWidths.unidade;
-    doc.text('Valor', xPos, yPos + lineHeight);
-
-    yPos += lineHeight + vSpacing;
-
-    // Parte que muda: cálculo do topo original para desenhar borda depois de todas as linhas
-    const yTabelaTopo = yPos - (lineHeight + vSpacing);
-
-    // Linhas da tabela
-    doc.setFont(undefined, 'normal');
-    let totalHeight = 0;
-
-    dados.servicos.forEach((servico, index) => {
-        // Quebra de página
-        if (yPos > doc.internal.pageSize.getHeight() - 30) {
-            doc.addPage();
-            yPos = 30;
-        }
-
-        // Split na descrição para quebra automática
-        const descricaoLines = doc.splitTextToSize(servico.descricao || '', colWidths.descricao - 4);
-        const thisRowLines = Math.max(descricaoLines.length, 1);
-        const rowHeight = thisRowLines * lineHeight + vSpacing;
-
-        // Fundo alternado
-        if (index % 2 === 0) {
-            doc.setFillColor(250, 250, 250);
-            doc.rect(PDF_CONFIG.margins.left, yPos, tableWidth, rowHeight, 'F');
-        }
-
-        // Conteúdo
-        let x = PDF_CONFIG.margins.left + 2;
-        let yText = yPos + lineHeight; // Um pouco abaixo do topo
-        doc.text(descricaoLines, x, yText-4, {baseline: "top"}); // baseline garante início correto do texto
-        x += colWidths.descricao;
-        doc.text(servico.unidade || '', x, yText);
-        x += colWidths.unidade;
-        doc.text(servico.valor || '', x, yText);
-
-        yPos += rowHeight;
-        totalHeight += rowHeight;
-    });
-
-    // Bordas externas da tabela
-    doc.setDrawColor(PDF_CONFIG.colors.border);
-    doc.setLineWidth(0.2);
-    // Altura total = head + todas as linhas
-    doc.rect(
-        PDF_CONFIG.margins.left,
-        yTabelaTopo,
-        tableWidth,
-        totalHeight + lineHeight + vSpacing // + head
-    );
-
-    // Bordas internas coluna
-    let x = PDF_CONFIG.margins.left;
-    x += colWidths.descricao;
-    doc.line(x, yTabelaTopo, x, yTabelaTopo + totalHeight + lineHeight + vSpacing);
-    x += colWidths.unidade;
-    doc.line(x, yTabelaTopo, x, yTabelaTopo + totalHeight + lineHeight + vSpacing);
-
-    return yPos + 5;
 }
 
 // Adicionar observações
 function adicionarObservacoesPDF(doc, dados, yPos) {
+    if (!dados) return yPos;
+
     if (dados.observacoes) {
-        // Título
         doc.setFontSize(PDF_CONFIG.fonts.subtitle);
         doc.setTextColor(PDF_CONFIG.colors.primary);
         doc.setFont(undefined, 'bold');
@@ -445,7 +460,6 @@ function adicionarObservacoesPDF(doc, dados, yPos) {
 
         yPos += 8;
 
-        // Conteúdo
         doc.setFontSize(PDF_CONFIG.fonts.normal);
         doc.setTextColor(PDF_CONFIG.colors.text);
         doc.setFont(undefined, 'normal');
@@ -477,11 +491,13 @@ function gerarNomeArquivo(dados) {
 
 function mostrarLoading(mostrar = true) {
     const botao = document.querySelector('button[type="submit"]');
-    if (mostrar) {
-        botao.textContent = 'Gerando PDF...';
-        botao.disabled = true;
-    } else {
-        botao.textContent = 'Gerar Orçamento em PDF';
-        botao.disabled = false;
+    if (botao) {
+        if (mostrar) {
+            botao.textContent = 'Gerando PDF...';
+            botao.disabled = true;
+        } else {
+            botao.textContent = 'Gerar Orçamento em PDF';
+            botao.disabled = false;
+        }
     }
 }
