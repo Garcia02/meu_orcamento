@@ -47,6 +47,85 @@ form#orcamento-form {
   transform: translate(0, -17px);
 }
 
+/* ===== NOVO - Container para o upload da logo ===== */
+.logo-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+/* ===== NOVO - Oculta o input de arquivo padrão ===== */
+#logo-upload {
+  display: none;
+}
+
+/* ===== NOVO - Quadrado sempre visível com placeholder ===== */
+.logo-box {
+  position: relative;
+  width: 150px;
+  height: 150px;
+  border: 2px solid #6c89ae;
+  border-radius: 8px;
+  background-color: #f4f6f8;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo-box:hover {
+  border-color: #30475e;
+  background-color: #f0f2f5;
+  box-shadow: 0 4px 12px rgba(48, 71, 94, 0.15);
+}
+
+/* ===== NOVO - Preview da logo ===== */
+#logo-preview {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+#logo-preview.active {
+  display: block;
+}
+
+/* ===== NOVO - Placeholder dentro do quadrado ===== */
+.logo-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  text-align: center;
+  color: #30475e;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.logo-placeholder.hidden {
+  display: none;
+}
+
+.logo-placeholder .icon {
+  font-size: 48px;
+}
+
+.logo-placeholder .text {
+  font-weight: 500;
+  font-size: 14px;
+}
 
 input,
 textarea {
@@ -164,6 +243,20 @@ th {
     font-size: 0.8rem;
     padding: 8px 23px;
   }
+
+  /* Responsividade para o upload da logo */
+  .logo-box {
+    width: 120px;
+    height: 120px;
+  }
+
+  .logo-placeholder .icon {
+    font-size: 36px;
+  }
+
+  .logo-placeholder .text {
+    font-size: 12px;
+  }
 }
 
 @media (max-width: 400px) {
@@ -174,4 +267,276 @@ th {
   h2 {
     font-size: 1.1rem;
   }
+
+  /* Responsividade para o upload da logo */
+  .logo-box {
+    width: 100px;
+    height: 100px;
+  }
+
+  .logo-placeholder .icon {
+    font-size: 28px;
+  }
+
+  .logo-placeholder .text {
+    font-size: 11px;
+  }
+}
+
+
+
+/* ===== ESTILOS PARA O PDF ===== */
+
+.pdf-container {
+    width: 100%;
+    max-width: 210mm;
+    margin: 0 auto;
+    padding: 20px;
+    background: white;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    color: #2d4059;
+}
+
+/* Cabeçalho */
+.pdf-cabecalho {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    gap: 20px;
+}
+
+.pdf-logo-container {
+    flex-shrink: 0;
+}
+
+.pdf-logo {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 2px solid #6c89ae;
+}
+
+.pdf-titulo {
+    flex-grow: 1;
+    text-align: center;
+}
+
+.pdf-titulo h1 {
+    margin: 0;
+    font-size: 28px;
+    color: #30475e;
+    font-weight: bold;
+}
+
+.pdf-subtitulo {
+    margin: 5px 0 0 0;
+    font-size: 14px;
+    color: #6c89ae;
+}
+
+/* Linha separadora */
+.pdf-linha-separadora {
+    height: 2px;
+    background: linear-gradient(to right, #6c89ae, #30475e, #6c89ae);
+    margin: 20px 0;
+}
+
+/* Seções */
+.pdf-secao {
+    margin-bottom: 20px;
+}
+
+.pdf-titulo-secao {
+    font-size: 14px;
+    font-weight: bold;
+    color: #30475e;
+    margin: 0 0 12px 0;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #6c89ae;
+}
+
+/* Dados do cliente */
+.pdf-dados-cliente {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 15px;
+}
+
+.pdf-dado {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    background: #f4f6f8;
+    border-radius: 6px;
+}
+
+.pdf-label {
+    font-weight: bold;
+    font-size: 12px;
+    color: #30475e;
+    margin-bottom: 4px;
+}
+
+.pdf-valor {
+    font-size: 13px;
+    color: #2d4059;
+}
+
+/* Tabela de serviços */
+.pdf-tabela-servicos {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 15px;
+}
+
+.pdf-tabela-servicos thead {
+    background: #30475e;
+    color: white;
+}
+
+.pdf-tabela-servicos th {
+    padding: 12px;
+    text-align: left;
+    font-size: 12px;
+    font-weight: bold;
+    color: #30475e;
+}
+
+.pdf-tabela-servicos th.descricao {
+    width: 40%;
+}
+
+.pdf-tabela-servicos th.quantidade {
+    width: 10%;
+    text-align: center;
+}
+
+.pdf-tabela-servicos th.medida {
+    width: 15%;
+    text-align: center;
+}
+
+.pdf-tabela-servicos th.valor-unitario {
+    width: 15%;
+    text-align: right;
+}
+
+.pdf-tabela-servicos th.valor-total {
+    width: 20%;
+    text-align: right;
+}
+
+.pdf-tabela-servicos td {
+    padding: 10px 12px;
+    font-size: 12px;
+    border-bottom: 1px solid #ddd;
+}
+
+.pdf-tabela-servicos tr.par {
+    background: #f9f9f9;
+}
+
+.pdf-tabela-servicos tr.impar {
+    background: white;
+}
+
+.pdf-tabela-servicos td.descricao {
+    text-align: left;
+}
+
+.pdf-tabela-servicos td.quantidade,
+.pdf-tabela-servicos td.medida {
+    text-align: center;
+}
+
+.pdf-tabela-servicos td.valor-unitario,
+.pdf-tabela-servicos td.valor-total {
+    text-align: right;
+    font-weight: 500;
+}
+
+/* Total */
+.pdf-total {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 15px;
+    padding: 15px 20px;
+    background: linear-gradient(135deg, #30475e 0%, #6c89ae 100%);
+    color: white;
+    border-radius: 6px;
+    margin-bottom: 20px;
+}
+
+.pdf-total-label {
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.pdf-total-valor {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+/* Observações */
+.pdf-observacoes {
+    padding: 12px;
+    background: #f4f6f8;
+    border-left: 4px solid #6c89ae;
+    margin: 0 0 10px 0;
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+.pdf-validade {
+    font-size: 12px;
+    color: #30475e;
+    margin: 0;
+}
+
+/* Rodapé */
+.pdf-rodape {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 20px;
+    padding: 20px;
+    background: #f4f6f8;
+    border-radius: 6px;
+    font-size: 11px;
+}
+
+.pdf-info-empresa p,
+.pdf-contatos p,
+.pdf-assinatura p {
+    margin: 5px 0;
+}
+
+.pdf-info-empresa p:first-child,
+.pdf-assinatura p:first-child {
+    font-weight: bold;
+    color: #30475e;
+}
+
+.pdf-contatos p {
+    color: #6c89ae;
+}
+
+.pdf-data {
+    margin-top: 10px;
+    font-size: 10px;
+    color: #999;
+}
+
+/* Responsividade para PDF */
+@media print {
+    .pdf-container {
+        max-width: 100%;
+        padding: 0;
+    }
+    
+    .pdf-dados-cliente {
+        grid-template-columns: 1fr 1fr;
+    }
 }

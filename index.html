@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link rel="stylesheet" href="./style.css">
-    <link rel="icon" type="icon" href="./assets/Lara_Engenharia_Logo.ico">
-    <title>Lara Engenharia - Proposta Comercial</title>
+
+    <title>Meu Orçamento</title>
 
 </head>
 
@@ -17,7 +17,17 @@
     <form id="orcamento-form">
         <div class="cabecalho">
             <h2>Dados do Cliente</h2>
-            <img src="./assets/Lara_Engenharia_Logo.jpg" alt="Logo da empresa Lara Engenharia">
+            <!-- Container da logo com overlay clicável -->
+            <div class="logo-container">
+                <div class="logo-box">
+                    <img id="logo-preview" alt="Logo da empresa">
+                    <div class="logo-placeholder">
+                        <div class="icon">📷</div>
+                        <div class="text">Clique para adicionar logo</div>
+                    </div>
+                </div>
+                <input type="file" id="logo-upload" accept="image/*">
+            </div>
         </div>
         <input name="cidade" placeholder="Cidade do serviço" required>
         <input name="unidade" placeholder="Unidade" required>
@@ -30,13 +40,11 @@
             <input id="medida" placeholder="Medida">
             <input id="valor-unitario" placeholder="Valor Unitário">
 
-            <!-- Espaço para o total do serviço -->
             <div class="add_servico_container">
 
                 <button type="button" onclick="adicionarServico()">Adicionar Serviço</button>
 
                 <div id="total-container">
-                    <!-- Campo para exibir o total e permitir entrada manual -->
                     <input id="total-servicos-input" type="text" placeholder="Total (R$)"
                         oninput="manualTotalInput()" />
                 </div>
@@ -44,7 +52,6 @@
 
         </div>
         <div id="servicos-lista">
-            <!-- Tabela dos serviços -->
             <table id="tabela-servicos" style="display:none;">
                 <thead>
                     <tr>
@@ -57,7 +64,6 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- Serviços adicionados aparecerão aqui -->
                 </tbody>
             </table>
         </div>
@@ -70,11 +76,13 @@
         <button type="submit">Gerar Orçamento em PDF</button>
     </form>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.12.1/html2pdf.bundle.min.js"
+        integrity="sha512-D25Z8/1q2z65ZpJ3NzY6XiPZfwjhbv34OTQHDIZd+KPK+uWCovGt+fMkSzW8ArzCMFUgZt6Cdu7qoXNuy6a2GA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="./js/utils.js"></script>
     <script src="./js/storage.js"></script>
     <script src="./js/pdf-generator.js"></script>
     <script src="./js/main.js"></script>
-    <script src="./assets/jspdf.umd.min.js"></script>
 </body>
 
 </html>
